@@ -19,6 +19,8 @@ MonoBehaviour:
   obsHoleHeightMax: 3.5
   blockPrefabs:
   - {fileID: 1909502527338032, guid: 69fef59904ff2924aa2369685d650ad0, type: 2}
+  - {fileID: 1579052714920310, guid: 3cdb5b1d5da0cf143adec4e09b147e13, type: 2}
+  - {fileID: 1438966448896934, guid: 87f0ef3d1cd06e043b60ca613845b2b5, type: 2}
   flyUpForce: 400
   horizontalSpeed: 2
   birdPrefabs:

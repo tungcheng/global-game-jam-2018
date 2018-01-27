@@ -18,6 +18,9 @@ public class GameManager : Singleton<GameManager> {
     [SerializeField]
     GameObject m_ContinueText;
 
+    [SerializeField]
+    GameObject m_Fog;
+
     Camera mainCam;
 
     float blockLength;
@@ -33,6 +36,8 @@ public class GameManager : Singleton<GameManager> {
 
     List<GameObject> listNewObstacle = new List<GameObject>();
     List<GameObject> listBirds = new List<GameObject>();
+
+    float fogBirdDistanceX;
     
 	// Use this for initialization
 	void Start () {
@@ -43,6 +48,8 @@ public class GameManager : Singleton<GameManager> {
         cameraBirdDistanceX = m_FlappyBird.transform.position.x - mainCam.transform.position.x;
         startCameraPosX = mainCam.transform.position.x;
         startBirdPos = m_FlappyBird.transform.position;
+        fogBirdDistanceX = m_FlappyBird.transform.position.x - m_Fog.transform.position.x;
+
         m_RestartButton.SetActive(false);
         m_ContinueText.SetActive(false);
         listBirds.Add(m_FlappyBird.gameObject);
@@ -65,7 +72,11 @@ public class GameManager : Singleton<GameManager> {
         camPos.x = startCameraPosX;
         mainCam.transform.position = camPos;
 
-        FindObjectOfType<Background>().Reset();
+        var backgrounds = FindObjectsOfType<Background>();
+        for(int i = 0; i < backgrounds.Length; i++)
+        {
+            backgrounds[i].Reset();
+        }
     }
 
     public void RestartGame()
@@ -105,7 +116,14 @@ public class GameManager : Singleton<GameManager> {
         camPos.x = m_FlappyBird.transform.position.x - cameraBirdDistanceX;
         mainCam.transform.position = camPos;
 
-        if(isGameOver && Input.GetMouseButtonUp(0))
+        var fogPos = m_Fog.transform.position;
+        fogPos.x = m_FlappyBird.transform.position.x - fogBirdDistanceX;
+        if(m_Fog.transform.position.x < fogPos.x)
+        {
+            m_Fog.transform.position = fogPos;
+        }
+
+        if (isGameOver && Input.GetMouseButtonUp(0))
         {
             NewBird();
         }

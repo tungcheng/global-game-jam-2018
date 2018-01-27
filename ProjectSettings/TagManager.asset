@@ -57,3 +57,6 @@ TagManager:
   - name: Bird
     uniqueID: 391375369
     locked: 0
+  - name: Fog
+    uniqueID: 3841315695
+    locked: 0
