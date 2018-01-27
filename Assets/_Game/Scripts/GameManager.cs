@@ -28,6 +28,9 @@ public class GameManager : Singleton<GameManager> {
     [SerializeField]
     Text m_HighScoreTxt;
 
+    [SerializeField]
+    AudioSource m_AudioSource;
+
     const string HIGH_SCORE_KEY = "highscore";
 
     int curScore;
@@ -169,6 +172,8 @@ public class GameManager : Singleton<GameManager> {
                 m_HighScoreTxt.text = "Best: " + curHighScore;
                 PlayerPrefs.SetInt(HIGH_SCORE_KEY, curHighScore);
             }
+
+            PlaySfxPoint();
         }
     }
 
@@ -182,5 +187,21 @@ public class GameManager : Singleton<GameManager> {
         isGameOver = true;
         m_RestartButton.SetActive(true);
         m_ContinueText.SetActive(true);
+        PlaySfxHit();
+    }
+
+    public void PlaySfxWing()
+    {
+        m_AudioSource.PlayOneShot(m_DesignData.sfxWing);
+    }
+
+    public void PlaySfxHit()
+    {
+        m_AudioSource.PlayOneShot(m_DesignData.sfxHit);
+    }
+
+    public void PlaySfxPoint()
+    {
+        m_AudioSource.PlayOneShot(m_DesignData.sfxPoint);
     }
 }

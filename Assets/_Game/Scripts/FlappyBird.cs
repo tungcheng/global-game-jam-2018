@@ -23,6 +23,7 @@ public class FlappyBird : MonoBehaviour {
         {
             var data = GameManager.Instance.GetDesignData();
             m_RigidBody.AddForce(new Vector2(0f, data.flyUpForce));
+            GameManager.Instance.PlaySfxWing();
         }
 
         var velocity = m_RigidBody.velocity;
@@ -50,12 +51,12 @@ public class FlappyBird : MonoBehaviour {
         render.sprite = data.deadImage;
         render.color = data.deadColor;
         GameManager.Instance.OnBirdDead();
+        GameManager.Instance.PlaySfxHit();
     }
 
     const string ScoreTag = "Score";
     void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("trigger hit");
         if (m_IsDead) return;
 
         if(other.gameObject.CompareTag(ScoreTag))

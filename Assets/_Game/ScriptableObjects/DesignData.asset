@@ -30,3 +30,6 @@ MonoBehaviour:
   deadColor: {r: 0.69803923, g: 0.69803923, b: 0.69803923, a: 1}
   birdPrefabs:
   - {fileID: 1824146553545576, guid: e0645efffe48031448ef2167c74560df, type: 2}
+  sfxWing: {fileID: 8300000, guid: 01aec33e1486fc44c81da2ce38811929, type: 3}
+  sfxPoint: {fileID: 8300000, guid: 6f7d4766accff8349bf1efb558bb1730, type: 3}
+  sfxHit: {fileID: 8300000, guid: f7b619f5354d2e54cba11ae5b862dbeb, type: 3}

@@ -27,4 +27,9 @@ public class DesignData : ScriptableObject {
 
     [Header("Bird Prefabs")]
     public GameObject[] birdPrefabs;
+
+    [Header("Sounds")]
+    public AudioClip sfxWing;
+    public AudioClip sfxPoint;
+    public AudioClip sfxHit;
 }
