@@ -77,6 +77,14 @@ public class GameManager : Singleton<GameManager> {
         {
             backgrounds[i].Reset();
         }
+
+        var fogPos = m_Fog.transform.position;
+        fogPos.x = m_FlappyBird.transform.position.x - fogBirdDistanceX;
+        if (m_Fog.transform.position.x > fogPos.x)
+        {
+            fogPos.x = Mathf.Lerp(fogPos.x, m_Fog.transform.position.x, 0.75f);
+            m_Fog.transform.position = fogPos;
+        }
     }
 
     public void RestartGame()
