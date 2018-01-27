@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
@@ -13,6 +14,15 @@ public class GameControl : MonoBehaviour
 	public bool gameOver = false;				//Is the game over?
 	public float scrollSpeed = -1.5f;
 
+    public GameObject rootBird;
+    GameObject currentBird;
+
+    public float deadShowRange = 10f;
+    float timeStart = 0f;
+    float timeDead = 0f;
+    Dictionary<int, List<Bird>> deadBirds = new Dictionary<int, List<Bird>>();
+
+    List<Bird> showingDeadBirds = new List<Bird>();
 
 	void Awake()
 	{
@@ -24,6 +34,8 @@ public class GameControl : MonoBehaviour
 		else if(instance != this)
 			//...destroy this one because it is a duplicate.
 			Destroy (gameObject);
+
+        StartNewGame();
 	}
 
 	void Update()
@@ -31,10 +43,111 @@ public class GameControl : MonoBehaviour
 		//If the game is over and the player has pressed some input...
 		if (gameOver && Input.GetMouseButtonDown(0)) 
 		{
-			//...reload the current scene.
-			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            //...reload the current scene.
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            StartNewGame();
 		}
+
+        if(!gameOver)
+        {
+            float playTime = GetCurrentTime() - timeStart;
+            int timeBlock = Mathf.FloorToInt(playTime);
+            if(deadBirds.ContainsKey(timeBlock))
+            {
+                var listBirds = deadBirds[timeBlock];
+                int count = listBirds.Count;
+                for(int i = 0; i < count; i++)
+                {
+                    bool isInTimeShowDead = IsTimeInShowDeadRange(listBirds[i].deadTime, playTime, deadShowRange);
+                    if (isInTimeShowDead && !listBirds[i].isDeadAndShow)
+                    {
+                        listBirds[i].gameObject.SetActive(true);
+                        listBirds[i].isDeadAndShow = true;
+                        showingDeadBirds.Add(listBirds[i]);
+                    }
+                }
+            }
+            HideOutRangeDeadBirds(playTime);
+        }
 	}
+
+    void HideOutRangeDeadBirds(float playTime)
+    {
+        int count = showingDeadBirds.Count;
+        for (int i = 0; i < count; i++)
+        {
+            bool isInTimeShowDead = IsTimeInShowDeadRange(showingDeadBirds[i].deadTime, playTime, deadShowRange);
+
+            if(!isInTimeShowDead && showingDeadBirds[i].isDeadAndShow)
+            {
+                showingDeadBirds[i].gameObject.SetActive(false);
+                showingDeadBirds[i].isDeadAndShow = false;
+                i -= 1;
+                count -= 1;
+                showingDeadBirds.RemoveAt(i);
+            }
+        }
+    }
+
+    void HideAllDeadBirds()
+    {
+        int count = showingDeadBirds.Count;
+        for(int i = 0; i < count; i++)
+        {
+            showingDeadBirds[i].gameObject.SetActive(false);
+            showingDeadBirds[i].isDeadAndShow = false;
+        }
+    }
+
+    bool IsTimeInShowDeadRange(float deadTime, float currentPlayTime, float deadShowRange)
+    {
+        if (deadTime < currentPlayTime - deadShowRange) return false;
+        if (deadTime > currentPlayTime + deadShowRange) return false;
+        return true;
+    }
+
+    void StartNewGame()
+    {
+        if(currentBird != null)
+        {
+            float deadTime = GetCurrentTime() - timeStart;
+            if(deadTime > deadShowRange)
+            {
+                var bird = currentBird.GetComponent<Bird>();
+                bird.deadTime = deadTime;
+                bird.isDeadAndShow = false;
+                currentBird.SetActive(false);
+                int deadTimeBlock = Mathf.FloorToInt(deadTime);
+                if (!deadBirds.ContainsKey(deadTimeBlock))
+                {
+                    deadBirds[deadTimeBlock] = new List<Bird>();
+                }
+                deadBirds[deadTimeBlock].Add(bird);
+            }
+            else
+            {
+                Destroy(currentBird);
+            }
+        }
+        HideAllDeadBirds();
+        showingDeadBirds.Clear();
+        timeStart = GetCurrentTime();
+        rootBird.SetActive(false);
+        currentBird = Instantiate(rootBird);
+        currentBird.SetActive(true);
+        FindObjectOfType<ColumnPool>().NewGame();
+        gameOver = false;
+        gameOvertext.SetActive(false);
+    }
+
+    float GetCurrentTime()
+    {
+        if(gameOver)
+        {
+            return timeDead;
+        }
+        return Time.realtimeSinceStartup;
+    }
 
 	public void BirdScored()
 	{
@@ -49,9 +162,10 @@ public class GameControl : MonoBehaviour
 
 	public void BirdDied()
 	{
-		//Activate the game over text.
-		gameOvertext.SetActive (true);
+        timeDead = GetCurrentTime();
+        //Activate the game over text.
+        gameOvertext.SetActive (true);
 		//Set the game to be over.
 		gameOver = true;
-	}
+    }
 }

@@ -20,18 +20,31 @@ public class ColumnPool : MonoBehaviour
 
 	void Start()
 	{
-		timeSinceLastSpawned = 0f;
 
-		//Initialize the columns collection.
-		columns = new GameObject[columnPoolSize];
-		//Loop through the collection... 
-		for(int i = 0; i < columnPoolSize; i++)
-		{
-			//...and create the individual columns.
-			columns[i] = (GameObject)Instantiate(columnPrefab, objectPoolPosition, Quaternion.identity);
-		}
 	}
 
+    public void NewGame()
+    {
+        timeSinceLastSpawned = 0f;
+
+        //Initialize the columns collection.
+        columns = new GameObject[columnPoolSize];
+        //Loop through the collection... 
+        for (int i = 0; i < columnPoolSize; i++)
+        {
+            //...and create the individual columns.
+            columns[i] = (GameObject)Instantiate(columnPrefab, objectPoolPosition, Quaternion.identity);
+        }
+    }
+
+    void Reset()
+    {
+        for (int i = 0; i < columnPoolSize; i++)
+        {
+            Destroy(columns[i]);
+        }
+        columns = null;
+    }
 
 	//This spawns columns as long as the game is not over.
 	void Update()
@@ -56,5 +69,10 @@ public class ColumnPool : MonoBehaviour
 				currentColumn = 0;
 			}
 		}
+
+        if(GameControl.instance.gameOver == true && columns != null)
+        {
+            Reset();
+        }
 	}
 }

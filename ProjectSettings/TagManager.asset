@@ -48,6 +48,12 @@ TagManager:
   - name: Midground
     uniqueID: 463830803
     locked: 0
+  - name: Obstacle
+    uniqueID: 1269844913
+    locked: 0
   - name: Foreground
     uniqueID: 2952090975
+    locked: 0
+  - name: Bird
+    uniqueID: 391375369
     locked: 0

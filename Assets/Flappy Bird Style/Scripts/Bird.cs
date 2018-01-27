@@ -9,6 +9,9 @@ public class Bird : MonoBehaviour
 	private Animator anim;					//Reference to the Animator component.
 	private Rigidbody2D rb2d;				//Holds a reference to the Rigidbody2D component of the bird.
 
+    public float deadTime = 0f;
+    public bool isDeadAndShow = false;
+
 	void Start()
 	{
 		//Get reference to the Animator component attached to this GameObject.
@@ -38,8 +41,8 @@ public class Bird : MonoBehaviour
 
 	void OnCollisionEnter2D(Collision2D other)
 	{
-		// Zero out the bird's velocity
-		rb2d.velocity = Vector2.zero;
+        // Zero out the bird's velocity
+        rb2d.velocity = Vector2.zero;
 		// If the bird collides with something set it to dead...
 		isDead = true;
 		//...tell the Animator about it...

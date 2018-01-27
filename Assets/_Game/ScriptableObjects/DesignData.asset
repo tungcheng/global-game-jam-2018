@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02151a3146d73da48a237378ca7643a0, type: 3}
+  m_Name: DesignData
+  m_EditorClassIdentifier: 
+  obsScaleMinX: 1
+  obsScaleMaxX: 2
+  obsCenterMinY: 0
+  obsCenterMaxY: 3
+  obsHoleHeightMin: 2.5
+  obsHoleHeightMax: 3.5
+  blockPrefabs:
+  - {fileID: 1909502527338032, guid: 69fef59904ff2924aa2369685d650ad0, type: 2}
+  flyUpForce: 400
+  horizontalSpeed: 2
+  birdPrefabs:
+  - {fileID: 1824146553545576, guid: e0645efffe48031448ef2167c74560df, type: 2}
