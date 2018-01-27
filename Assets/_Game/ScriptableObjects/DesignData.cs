@@ -20,6 +20,10 @@ public class DesignData : ScriptableObject {
     [Header("Bird Settings")]
     public float flyUpForce;
     public float horizontalSpeed;
+    public Sprite flyUpImage;
+    public Sprite flyDownImage;
+    public Sprite deadImage;
+    public Color deadColor;
 
     [Header("Bird Prefabs")]
     public GameObject[] birdPrefabs;
