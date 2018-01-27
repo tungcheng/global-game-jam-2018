@@ -72,7 +72,7 @@ public class GameManager : Singleton<GameManager> {
         m_HighScoreTxt.text = "Best: " + curHighScore;
     }
 
-    void NewBird()
+    public void NewBird()
     {
         isGameOver = false;
         m_RestartButton.SetActive(false);
@@ -149,11 +149,6 @@ public class GameManager : Singleton<GameManager> {
         if(m_Fog.transform.position.x < fogPos.x)
         {
             m_Fog.transform.position = fogPos;
-        }
-
-        if (isGameOver && Input.GetMouseButtonUp(0))
-        {
-            NewBird();
         }
 	}
 
