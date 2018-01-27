@@ -78,6 +78,9 @@ public class GameManager : Singleton<GameManager> {
         m_RestartButton.SetActive(false);
         m_ContinueText.SetActive(false);
 
+        curScore = 0;
+        m_ScoreTxt.text = "Score: " + curScore;
+
         var prefabs = m_DesignData.birdPrefabs;
         var newBird = Instantiate(prefabs[Random.Range(0, prefabs.Length)]);
         m_FlappyBird = newBird.GetComponent<FlappyBird>();
@@ -136,25 +139,7 @@ public class GameManager : Singleton<GameManager> {
 
             listNewObstacle.Add(m_LastSpawnBlock);
         }
-
-        if(!isGameOver)
-        {
-            float distanceX = m_FlappyBird.transform.position.x - startBirdPos.x;
-            int newScore = Mathf.FloorToInt(distanceX * 0.5f);
-            if(newScore > curScore)
-            {
-                curScore = newScore;
-                m_ScoreTxt.text = "Score: " + curScore;
-
-                if(curScore > curHighScore)
-                {
-                    curHighScore = curScore;
-                    m_HighScoreTxt.text = "Best: " + curHighScore;
-                    PlayerPrefs.SetInt(HIGH_SCORE_KEY, curHighScore);
-                }
-            }
-        }
-
+        
         var camPos = mainCam.transform.position;
         camPos.x = m_FlappyBird.transform.position.x - cameraBirdDistanceX;
         mainCam.transform.position = camPos;
@@ -171,6 +156,22 @@ public class GameManager : Singleton<GameManager> {
             NewBird();
         }
 	}
+
+    public void OnHitNewScore()
+    {
+        if (!isGameOver)
+        {
+            curScore += 1;
+            m_ScoreTxt.text = "Score: " + curScore;
+
+            if (curScore > curHighScore)
+            {
+                curHighScore = curScore;
+                m_HighScoreTxt.text = "Best: " + curHighScore;
+                PlayerPrefs.SetInt(HIGH_SCORE_KEY, curHighScore);
+            }
+        }
+    }
 
     public DesignData GetDesignData()
     {

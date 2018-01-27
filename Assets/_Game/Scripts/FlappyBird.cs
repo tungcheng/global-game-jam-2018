@@ -51,4 +51,16 @@ public class FlappyBird : MonoBehaviour {
         render.color = data.deadColor;
         GameManager.Instance.OnBirdDead();
     }
+
+    const string ScoreTag = "Score";
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log("trigger hit");
+        if (m_IsDead) return;
+
+        if(other.gameObject.CompareTag(ScoreTag))
+        {
+            GameManager.Instance.OnHitNewScore();
+        }
+    }
 }
