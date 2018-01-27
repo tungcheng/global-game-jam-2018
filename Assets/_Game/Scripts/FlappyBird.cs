@@ -51,7 +51,6 @@ public class FlappyBird : MonoBehaviour {
         render.sprite = data.deadImage;
         render.color = data.deadColor;
         GameManager.Instance.OnBirdDead();
-        GameManager.Instance.PlaySfxHit();
     }
 
     const string ScoreTag = "Score";
