@@ -15,6 +15,9 @@ public class GameManager : Singleton<GameManager> {
     [SerializeField]
     GameObject m_RestartButton;
 
+    [SerializeField]
+    GameObject m_ContinueText;
+
     Camera mainCam;
 
     float blockLength;
@@ -41,6 +44,7 @@ public class GameManager : Singleton<GameManager> {
         startCameraPosX = mainCam.transform.position.x;
         startBirdPos = m_FlappyBird.transform.position;
         m_RestartButton.SetActive(false);
+        m_ContinueText.SetActive(false);
         listBirds.Add(m_FlappyBird.gameObject);
     }
 
@@ -48,7 +52,8 @@ public class GameManager : Singleton<GameManager> {
     {
         isGameOver = false;
         m_RestartButton.SetActive(false);
-        
+        m_ContinueText.SetActive(false);
+
         var prefabs = m_DesignData.birdPrefabs;
         var newBird = Instantiate(prefabs[Random.Range(0, prefabs.Length)]);
         m_FlappyBird = newBird.GetComponent<FlappyBird>();
@@ -115,5 +120,6 @@ public class GameManager : Singleton<GameManager> {
     {
         isGameOver = true;
         m_RestartButton.SetActive(true);
+        m_ContinueText.SetActive(true);
     }
 }
