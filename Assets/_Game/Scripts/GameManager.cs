@@ -50,6 +50,7 @@ public class GameManager : Singleton<GameManager> {
     List<GameObject> listBirds = new List<GameObject>();
 
     float fogBirdDistanceX;
+    Vector3 startFogPos;
     
 	// Use this for initialization
 	void Start () {
@@ -60,6 +61,7 @@ public class GameManager : Singleton<GameManager> {
         cameraBirdDistanceX = m_FlappyBird.transform.position.x - mainCam.transform.position.x;
         startCameraPosX = mainCam.transform.position.x;
         startBirdPos = m_FlappyBird.transform.position;
+        startFogPos = m_Fog.transform.position;
         fogBirdDistanceX = m_FlappyBird.transform.position.x - m_Fog.transform.position.x;
 
         m_RestartButton.SetActive(false);
@@ -122,6 +124,8 @@ public class GameManager : Singleton<GameManager> {
         listBirds.Clear();
 
         m_LastSpawnBlock = m_FirstSpawnBlock;
+
+        m_Fog.transform.position = startFogPos;
 
         NewBird();
     }
