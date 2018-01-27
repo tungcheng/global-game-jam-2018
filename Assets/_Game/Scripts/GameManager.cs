@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : Singleton<GameManager> {
 
@@ -20,6 +21,17 @@ public class GameManager : Singleton<GameManager> {
 
     [SerializeField]
     GameObject m_Fog;
+
+    [SerializeField]
+    Text m_ScoreTxt;
+
+    [SerializeField]
+    Text m_HighScoreTxt;
+
+    const string HIGH_SCORE_KEY = "highscore";
+
+    int curScore;
+    int curHighScore;
 
     Camera mainCam;
 
@@ -53,6 +65,11 @@ public class GameManager : Singleton<GameManager> {
         m_RestartButton.SetActive(false);
         m_ContinueText.SetActive(false);
         listBirds.Add(m_FlappyBird.gameObject);
+
+        curScore = 0;
+        curHighScore = PlayerPrefs.GetInt(HIGH_SCORE_KEY, 0);
+        m_ScoreTxt.text = "Score: " + curScore;
+        m_HighScoreTxt.text = "Best: " + curHighScore;
     }
 
     void NewBird()
@@ -118,6 +135,24 @@ public class GameManager : Singleton<GameManager> {
             m_LastSpawnBlock.transform.position = nextPos;
 
             listNewObstacle.Add(m_LastSpawnBlock);
+        }
+
+        if(!isGameOver)
+        {
+            float distanceX = m_FlappyBird.transform.position.x - startBirdPos.x;
+            int newScore = Mathf.FloorToInt(distanceX * 0.5f);
+            if(newScore > curScore)
+            {
+                curScore = newScore;
+                m_ScoreTxt.text = "Score: " + curScore;
+
+                if(curScore > curHighScore)
+                {
+                    curHighScore = curScore;
+                    m_HighScoreTxt.text = "Best: " + curHighScore;
+                    PlayerPrefs.SetInt(HIGH_SCORE_KEY, curHighScore);
+                }
+            }
         }
 
         var camPos = mainCam.transform.position;
