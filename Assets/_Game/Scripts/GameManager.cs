@@ -107,7 +107,7 @@ public class GameManager : Singleton<GameManager> {
         fogPos.x = m_FlappyBird.transform.position.x - fogBirdDistanceX;
         if (m_Fog.transform.position.x > fogPos.x)
         {
-            fogPos.x = Mathf.Lerp(fogPos.x, m_Fog.transform.position.x, 0.75f);
+            fogPos.x = Mathf.Lerp(fogPos.x, m_Fog.transform.position.x, 0.9f);
             m_Fog.transform.position = fogPos;
         }
     }

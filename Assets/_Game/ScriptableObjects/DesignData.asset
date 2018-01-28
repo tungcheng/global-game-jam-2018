@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Name: DesignData
   m_EditorClassIdentifier: 
   obsScaleMinX: 1
-  obsScaleMaxX: 2
+  obsScaleMaxX: 1.5
   obsCenterMinY: 0
   obsCenterMaxY: 3
-  obsHoleHeightMin: 2.5
-  obsHoleHeightMax: 3
+  obsHoleHeightMin: 3
+  obsHoleHeightMax: 3.2
   blockPrefabs:
   - {fileID: 1909502527338032, guid: 69fef59904ff2924aa2369685d650ad0, type: 2}
   - {fileID: 1579052714920310, guid: 3cdb5b1d5da0cf143adec4e09b147e13, type: 2}
