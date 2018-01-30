@@ -7,3 +7,5 @@ This is a repo of game I've written at VietNam Global-Game-Jam-2018. The idea st
 - Darkness cover new obstacle that come from the right of game-screen.
 - The dead-birds keep stay on ground to make player feel more angry.
 - Leaning obstacle
+
+<img src="https://github.com/tungcheng/global-game-jam-2018/blob/master/screenshot.jpg"> 
